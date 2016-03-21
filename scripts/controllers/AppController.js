@@ -8,8 +8,9 @@ angular.module("moviedb").controller("AppController", ["$scope", function($scope
     /* Scope Methods */
     //$on son eventos del scope de angular para capturar lo q nosotros digamos
     //en este caso capturamos "OnMenuChange"
-    $scope.$on("OnMenuChange", function() {
-        console.log("OnMenuChange", arguments);
-        $scope.model.title = arguments[1];
+    $scope.$on("OnMenuChange", function(evt, data) {
+        //console.log("OnMenuChange", arguments);
+        //$scope.model.title = arguments[1];
+        $scope.model.title = data;
     });
 }]);

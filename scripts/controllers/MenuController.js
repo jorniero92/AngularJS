@@ -29,9 +29,10 @@ angular.module("moviedb").controller("MenuController", ["$scope", function($scop
     /* Scope Watches */
 
     // Observar el selectedItem y cuando varie
-    $scope.$watch("model.selectedItem", function() {
-        console.log("WATCH", arguments);
-        $scope.$emit("OnMenuChange", $scope.model.selectedItem);
+    $scope.$watch("model.selectedItem", function(newValue, oldValue) {
+        //console.log("WATCH", arguments);
+        //$scope.$emit("OnMenuChange", $scope.model.selectedItem);
+        $scope.$emit("OnMenuChange", newValue);
     });
 
 
