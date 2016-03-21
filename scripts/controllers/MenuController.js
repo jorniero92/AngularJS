@@ -2,20 +2,21 @@
 //el primer parametro le añado el servicio --> $scope
 angular.module("moviedb").controller("MenuController", ["$scope", function($scope) {
 
-    /* inicializar el $scope */
+    /* Inicializar el $scope */
     //x defecto va a la pestaña "movies"
     $scope.model = {
         //mirar la referencia de la pestaña en la q estoy
         selectedItem: "movies"
     };
 
-    /* scope methods */
+    /* Scope Methods */
 
-    //es el onclick
+    //1º Es el onclick
     $scope.setSelectedItem = function(item) {
         $scope.model.selectedItem = item;
     };
-    //dado un item devuelve la clase css para que se represente
+
+    //2º Dado un item devuelve la clase css para que se represente
     $scope.getClassForItem = function(item) {
         if ($scope.model.selectedItem == item) {
             return "active";
@@ -24,4 +25,15 @@ angular.module("moviedb").controller("MenuController", ["$scope", function($scop
             return "";
         }
     };
+
+    /* Scope Watches */
+
+    // Observar el selectedItem y cuando varie
+    $scope.$watch("model.selectedItem", function(newValue, oldValue) {
+        //console.log("WATCH", arguments);
+        //$scope.$emit("OnMenuChange", $scope.model.selectedItem);
+        $scope.$emit("OnMenuChange", newValue);
+    });
+
+
 }]);
