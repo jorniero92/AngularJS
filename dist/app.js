@@ -30631,3 +30631,6 @@ angular.module("moviedb").controller("MenuController", ["$scope", function($scop
 
 
 }]);
+;angular.module("moviedb").controller("MoviesListController", ["$scope", function($scope) {
+	$scope.name = "Joseba";
+}]);
