@@ -6,7 +6,9 @@
 
 <body>
 <input type="text" placeholder="Nombre" ng-model="name">
+<button ng-click="name=' '">Reset</button>
 <div>Hello {{ name }}</div>
+<hl ng-if="name=='Jorge'">You Rocks!</hl>
 
 <script src="bower_components/angular/angular.js"></script>
 </body>
