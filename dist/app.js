@@ -30572,4 +30572,16 @@ $provide.value("$locale", {
 
 })(window, document);
 
-!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');;
+!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');;//defino el modul0 "moviedb" e 
+//inicializo las dependencias con --> []
+angular.module("moviedb", []);;// en el modulo "moviedb", defino el controlador
+//el primer parametro le añado el servicio --> $scope
+angular.module("moviedb").controller("MenuController", 
+	["$scope", function($scope) {
+		//inicializar el $scope
+		$scope.model = {
+			//mirar la referencia de la pestaña en la q estoy
+			selectedItem: "movies"
+		};
+	}]
+);
