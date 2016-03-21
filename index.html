@@ -1,8 +1,10 @@
 <!Doctype html>
-<html ng-app="moviedb">
+<!-- ng-app="moviedb" -->
+<!--ng-controller="AppController"-->
+<html ng-app="moviedb" ng-controller="AppController">
 
 <head>
-    <title> Movie DB </title>
+    <title> {{ model.title }} </title>
     <link rel="stylesheet" type="text/css" href="dist/style.css">
 </head>
 
@@ -24,15 +26,16 @@
                     <li ng-class="getClassForItem('movies')">
                         <a href="#" ng-click="setSelectedItem('movies')">Movies</a>
                     </li>
-                    <li ng-class="getClassForItem('series')">                        <a href="#" ng-click="setSelectedItem('series')">Series</a>
+                    <li ng-class="getClassForItem('series')"> <a href="#" ng-click="setSelectedItem('series')">Series</a>
                     </li>
                     <li ng-class="getClassForItem('people')">
                         <a href="#" ng-click="setSelectedItem('people')">People</a>
                     </li>
                 </ul>
-            </div><!-- /.navbar-collapse -->
-            
-        </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
         selected item: {{ model.selectedItem }}
     </nav>
     <script src="dist/app.js"></script>

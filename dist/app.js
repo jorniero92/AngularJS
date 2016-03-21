@@ -30574,24 +30574,39 @@ $provide.value("$locale", {
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');;//defino el modul0 "moviedb" e 
 //inicializo las dependencias con --> []
-angular.module("moviedb", []);;// en el modulo "moviedb", defino el controlador
+angular.module("moviedb", []);;angular.module("moviedb").controller("AppController", ["$scope", function($scope) {
+    /* Inicializar el $scope */
+    $scope.model = {
+        //mirar la referencia de la pestaña en la q estoy
+        title: ""
+    }
+
+    /* Scope Methods */
+    //$on son eventos del scope de angular para capturar lo q nosotros digamos
+    //en este caso capturamos "OnMenuChange"
+    $scope.$on("OnMenuChange", function() {
+        console.log("OnMenuChange", arguments);
+        $scope.model.title = arguments[1];
+    });
+}]);;// en el modulo "moviedb", defino el controlador
 //el primer parametro le añado el servicio --> $scope
 angular.module("moviedb").controller("MenuController", ["$scope", function($scope) {
 
-    /* inicializar el $scope */
+    /* Inicializar el $scope */
     //x defecto va a la pestaña "movies"
     $scope.model = {
         //mirar la referencia de la pestaña en la q estoy
         selectedItem: "movies"
     };
 
-    /* scope methods */
+    /* Scope Methods */
 
-    //es el onclick
+    //1º Es el onclick
     $scope.setSelectedItem = function(item) {
         $scope.model.selectedItem = item;
     };
-    //dado un item devuelve la clase css para que se represente
+
+    //2º Dado un item devuelve la clase css para que se represente
     $scope.getClassForItem = function(item) {
         if ($scope.model.selectedItem == item) {
             return "active";
@@ -30600,4 +30615,14 @@ angular.module("moviedb").controller("MenuController", ["$scope", function($scop
             return "";
         }
     };
+
+    /* Scope Watches */
+
+    // Observar el selectedItem y cuando varie
+    $scope.$watch("model.selectedItem", function() {
+        console.log("WATCH", arguments);
+        $scope.$emit("OnMenuChange", $scope.model.selectedItem);
+    });
+
+
 }]);
