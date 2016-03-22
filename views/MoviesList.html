@@ -1,13 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta character="UTF-8">
-    <title>Movies</title>
-</head>
-
-<body>
+<div ng-controller="MoviesListController">
     <h1>Movies</h1>
-</body>
-
-</html>
+    <table class="table table-striped">
+        <thread>
+            <tr>
+                <th>Poster</th>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Rating</th>
+            </tr>
+        </thread>
+        <tbody>
+            <tr ng-repeat="item in model">
+            <td>
+                <img ng-src="{{::item.poster_url}}" alt="{{::item.title }}'s poster" title="{{::item.title }}">
+            </td>
+            <td>
+                {{::item.title}}
+            </td>
+            <td>
+                {{::item.release_date}}
+            </td>
+            <td>
+                {{::item.rating}}
+            </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
