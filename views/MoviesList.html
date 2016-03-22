@@ -1,28 +1,32 @@
 <div ng-controller="MoviesListController">
     <h1>Movies</h1>
-    <table class="table table-striped">
-        <thread>
+    <button ng-click="model=[]">Delete All</button>
+    <div class="jumbotron" ng-show="uiState=='blank'">
+        <p class="lead">No data hear</p>
+    </div>
+    <table class="table table-striped" ng-show="uiState=='ideal'">
+        <thead>
             <tr>
                 <th>Poster</th>
                 <th>Title</th>
                 <th>Year</th>
                 <th>Rating</th>
             </tr>
-        </thread>
+        </thead>
         <tbody>
             <tr ng-repeat="item in model">
-            <td>
-                <img ng-src="{{::item.poster_url}}" alt="{{::item.title }}'s poster" title="{{::item.title }}">
-            </td>
-            <td>
-                {{::item.title}}
-            </td>
-            <td>
-                {{::item.release_date}}
-            </td>
-            <td>
-                {{::item.rating}}
-            </td>
+                <td>
+                    <img ng-src="{{::item.poster_url}}" alt="{{::item.title}}'s poster" title="{{::item.title}}">
+                </td>
+                <td>
+                    {{::item.title}}
+                </td>
+                <td>
+                    {{::item.release_date}}
+                </td>
+                <td>
+                    {{::item.rating}}
+                </td>
             </tr>
         </tbody>
     </table>

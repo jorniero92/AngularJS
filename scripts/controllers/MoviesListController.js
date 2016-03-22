@@ -1,5 +1,6 @@
 angular.module("moviedb").controller("MoviesListController", ["$scope", function($scope) {
 
+    $scope.uiState = 'ideal';
     /* Scope model init */
     $scope.model = [{
         "title": "Deadpool",
@@ -27,4 +28,13 @@ angular.module("moviedb").controller("MoviesListController", ["$scope", function
         "rating": 7.4,
         "release_date": "2016-02-12"
     }];
+
+    /*Scope Wathec*/
+    $scope.$watch("model", function(newValue, oldValue) {
+        if (newValue.length == 0) {
+            $scope.uiState = 'blank';
+        } else {
+            $scope.uiState = 'ideal';
+        }
+    });
 }]);
