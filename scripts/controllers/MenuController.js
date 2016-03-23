@@ -1,15 +1,18 @@
-// en el modulo "moviedb", defino el controlador
-//el primer parametro le añado el servicio --> $scope
-angular.module("moviedb").controller("MenuController", ["$scope","$location", function($scope, $location) {
+/* en el modulo "moviedb", defino el controlador
+el primer parametro le añado el servicio --> $scope */
+angular.module("moviedb").controller("MenuController", ["$scope", "$location", "paths", function($scope, $location, paths) {
 
     /* Inicializar el $scope */
     //x defecto va a la pestaña "movies"
     $scope.model = {
         //mirar la referencia de la pestaña en la q estoy
-        selectedItem: "movies"
+        selectedItem: paths.movies
     };
 
-    /* Scope Methods */
+    $scope.paths = paths;
+
+
+/* Scope Methods */
     /*
         //1º Es el onclick
         $scope.setSelectedItem = function(item) {
@@ -26,7 +29,7 @@ angular.module("moviedb").controller("MenuController", ["$scope","$location", fu
         }
     };
 
-    /* Scope Watches */
+/* Scope Watches */
     /*
         // Observar el selectedItem y cuando varie
         $scope.$watch("model.selectedItem", function(newValue, oldValue) {

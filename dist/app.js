@@ -35282,29 +35282,31 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 ;//defino el modul0 "moviedb" e 
 //inicializo las dependencias con --> []
 angular.module("moviedb", ['ngRoute']).config(
-    ["$routeProvider", function($routeProvider) {
+    ["$routeProvider","paths", function($routeProvider, paths) {
 
         //configuro las URLs de la aplicacion
-        $routeProvider.when('/movies/', {
+        $routeProvider.when(paths.movies, {
         	templateUrl: 'views/MoviesList.html'
-        }).when('/series/', {
+        }).when(paths.series, {
         	templateUrl: 'views/SeriesList.html'
-        }).when('/people/', {
+        }).when(paths.people, {
         	templateUrl: 'views/PeopleList.html'
-        }).when('/', {
-        	redirectTo: '/movies'
+        }).when(paths.home, {
+        	redirectTo: paths.movies
         }).otherwise({
         	templateUrl: 'views/404.html'
         });
     }]);
-;angular.module("moviedb").controller("AppController", ["$scope", "$location", function($scope, $location) {
+;angular.module("moviedb").controller("AppController", ["$scope", "$location", "paths", function($scope, $location, paths) {
     var controller = this;
+
+
     /* Propiedades de los controladores */
-    this.titles = {
-        "/movies/": "Movies List",
-        "/series/": "Series List",
-        "/people/": "People List"
-    };
+    controller.titles = {};
+    controller.titles[paths.movies] = "Movies List";
+    controller.titles[paths.series] = "Series List";
+    controller.titles[paths.people] = "People List";
+
 
     /* Inicializar el $scope */
     $scope.model = {
@@ -35330,18 +35332,19 @@ angular.module("moviedb", ['ngRoute']).config(
 
 
 }]);
-;// en el modulo "moviedb", defino el controlador
-//el primer parametro le añado el servicio --> $scope
-angular.module("moviedb").controller("MenuController", ["$scope","$location", function($scope, $location) {
+;angular.module("moviedb").controller("MenuController", ["$scope", "$location", "paths", function($scope, $location, paths) {
 
     /* Inicializar el $scope */
     //x defecto va a la pestaña "movies"
     $scope.model = {
         //mirar la referencia de la pestaña en la q estoy
-        selectedItem: "movies"
+        selectedItem: paths.movies
     };
 
-    /* Scope Methods */
+    $scope.paths = paths;
+
+
+/* Scope Methods */
     /*
         //1º Es el onclick
         $scope.setSelectedItem = function(item) {
@@ -35358,7 +35361,7 @@ angular.module("moviedb").controller("MenuController", ["$scope","$location", fu
         }
     };
 
-    /* Scope Watches */
+/* Scope Watches */
     /*
         // Observar el selectedItem y cuando varie
         $scope.$watch("model.selectedItem", function(newValue, oldValue) {
@@ -35444,3 +35447,9 @@ angular.module("moviedb").controller("MenuController", ["$scope","$location", fu
 
     };
 }]);
+;angular.module("moviedb").constant("paths", {
+    home: "/",
+    movies: "/movies/",
+    series: "/series/",
+    people: "/people/"
+});

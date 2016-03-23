@@ -18,19 +18,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Movie DB</a>
+                <a class="navbar-brand" href="#{{::paths.home}}">Movie DB</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li ng-class="getClassForItem('/movies/')">
-                        <a href="#/movies">Movies</a>
+                    <li ng-class="getClassForItem(paths.movies)">
+                        <a href="#{{::paths.movies}}">Movies</a>
                     </li>
-                    <li ng-class="getClassForItem('/series/')">
-                        <a href="#/series">Series</a>
+                    <li ng-class="getClassForItem(paths.series)">
+                        <a href="#{{::paths.series}}">Series</a>
                     </li>
-                    <li ng-class="getClassForItem('/people/')">
-                        <a href="#/people">People</a>
+                    <li ng-class="getClassForItem(paths.people)">
+                        <a href="#{{::paths.people}}">People</a>
                     </li>
                 </ul>
             </div>
