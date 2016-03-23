@@ -35376,8 +35376,24 @@ angular.module("moviedb", ["ngRoute", "URL"]).config(
         $scope.model.selectedItem = $location.path();
     });
 }]);
-;angular.module("moviedb").controller("MovieDetailController", ["$scope", "$routeParams", "MovieService",
-        function($scope, $routeParams, MovieService) {
+;angular.module("moviedb").controller("MovieDetailController", ["$scope", "$routeParams", "$location", "MovieService", "paths",
+        function($scope, $routeParams, $location, MovieService, paths) {
+            //scope init
+            $scope.model = {};
+            $scope.uiState = 'loading';
+
+            // COntroller init
+            MovieService.getMovie($routeParams.id).then(
+                //pelicula encontrada
+                function(movie) {
+                    $scope.model = movie;
+                    $scope.uiState = 'ideal';
+                },
+                //pelicula no encontrada
+                function(error) {
+                    $location.url(paths.notFound);
+                }
+            );
 
         }
     ]
@@ -35438,7 +35454,7 @@ angular.module("moviedb", ["ngRoute", "URL"]).config(
             }
         }
     });
-;angular.module("moviedb").service("MovieService", ["$http", "$q", "apiPaths", function($http, $q, apiPaths) {
+;angular.module("moviedb").service("MovieService", ["$http", "$q", "apiPaths", "URL", function($http, $q, apiPaths, URL) {
 
     this.apiRequest = function(url) {
         // Crear el objeto diferido
@@ -35454,7 +35470,7 @@ angular.module("moviedb", ["ngRoute", "URL"]).config(
             //peticion KO
             function(response) {
                 //rechazar la promesa
-                deffered.resolve(response.data);
+                deffered.reject(response.data);
             }
         );
         //devolver la promesa
@@ -35467,7 +35483,8 @@ angular.module("moviedb", ["ngRoute", "URL"]).config(
     };
 
     this.getMovie = function(movieId) {
-        var url = URL.resolve(apiPaths.movieDetail, { id: movieID });
+        var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
+        return this.apiRequest(url);
     };
 
 }]);
@@ -35506,5 +35523,6 @@ angular.module("moviedb", ["ngRoute", "URL"]).config(
     movieDetail: "/movies/:id",
     movies: "/movies/",
     series: "/series/",
-    people: "/people/"
+    people: "/people/",
+    notFound: "/sorry"
 });
