@@ -1,13 +1,11 @@
-angular.module("moviedb").service("MovieService", ["$http", "$q", function($http, $q) {
+angular.module("moviedb").service("MovieService", ["$http", "$q", "apiPaths", function($http, $q, apiPaths) {
 
-    this.getMovies = function() {
-
-
+    this.apiRequest = function(url) {
         // Crear el objeto diferido
         var deffered = $q.defer();
 
         // hacer asincrono el trabajo
-        $http.get('/api/movies/').then(
+        $http.get(url).then(
             //peticion ok
             function(response) {
                 //resolver la promesa
@@ -19,7 +17,17 @@ angular.module("moviedb").service("MovieService", ["$http", "$q", function($http
                 deffered.resolve(response.data);
             }
         );
+        //devolver la promesa
         return deffered.promise;
-
     };
+
+
+    this.getMovies = function() {
+        return this.apiRequest(apiPaths.movies);
+    };
+
+    this.getMovie = function(movieId) {
+        var url = URL.resolve(apiPaths.movieDetail, { id: movieID });
+    };
+
 }]);

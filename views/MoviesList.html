@@ -37,9 +37,10 @@
                 </td>
                 <td>
                     {{::item.rating}}
+                    ({{::item.rating | schoolrating:"US"}})
                 </td>
                 <td>
-                    ({{::item.rating | schoolrating:"US"}})
+                    <a href="#{{::getMovieDetailURL(item) }}" class="btn btn-default">View</a>
                 </td>
             </tr>
         </tbody>

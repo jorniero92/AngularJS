@@ -35281,12 +35281,14 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 ;//defino el modul0 "moviedb" e 
 //inicializo las dependencias con --> []
-angular.module("moviedb", ['ngRoute']).config(
+angular.module("moviedb", ["ngRoute", "URL"]).config(
     ["$routeProvider","paths", function($routeProvider, paths) {
 
         //configuro las URLs de la aplicacion
         $routeProvider.when(paths.movies, {
         	templateUrl: 'views/MoviesList.html'
+        }).when(paths.movieDetail, {
+            templateUrl: 'views/MovieDetail.html'
         }).when(paths.series, {
         	templateUrl: 'views/SeriesList.html'
         }).when(paths.people, {
@@ -35374,33 +35376,47 @@ angular.module("moviedb", ['ngRoute']).config(
         $scope.model.selectedItem = $location.path();
     });
 }]);
-;angular.module("moviedb").controller("MoviesListController", ["$scope", "$log", "MovieService", function($scope, $log, MovieService) {
+;angular.module("moviedb").controller("MovieDetailController", ["$scope", "$routeParams", "MovieService",
+        function($scope, $routeParams, MovieService) {
 
-    //  $scope.uiState = 'blank';
-    /* Scope model init */
-    $scope.model = [];
-
-    $scope.uiState = 'loading';
-    /* controller start*/
-    MovieService.getMovies().then(
-        // promesa resuelta
-        function(data) {
-            $log.log("SUCCESS", data);
-            $scope.model = data;
-            if ($scope.model.length == 0) {
-                $scope.uiState = 'blank';
-            } else {
-                $scope.uiState = 'ideal';
-            }
-        },
-        // promesa rechazada
-        function(data) {
-            $log.error("ERROR", data);
-            $scope.uiState = 'error';
         }
+    ]
 
-    );
-}]);
+);
+;angular.module("moviedb").controller("MoviesListController", ["$scope", "$log", "MovieService", "URL", "paths",
+    function($scope, $log, MovieService, URL, paths) {
+
+        //  $scope.uiState = 'blank';
+        /* Scope model init */
+        $scope.model = [];
+
+        $scope.uiState = 'loading';
+        
+        $scope.getMovieDetailURL = function(movie){
+            return URL.resolve(paths.movieDetail, {id: movie.id});
+        };
+
+        /* controller start*/
+        MovieService.getMovies().then(
+            // promesa resuelta
+            function(data) {
+                $log.log("SUCCESS", data);
+                $scope.model = data;
+                if ($scope.model.length == 0) {
+                    $scope.uiState = 'blank';
+                } else {
+                    $scope.uiState = 'ideal';
+                }
+            },
+            // promesa rechazada
+            function(data) {
+                $log.error("ERROR", data);
+                $scope.uiState = 'error';
+            }
+
+        );
+    }
+]);
 ;angular.module("moviedb").filter("ago", function() {
     return function(text){
     	return moment(text).fromNow() ;
@@ -35422,16 +35438,14 @@ angular.module("moviedb", ['ngRoute']).config(
             }
         }
     });
-;angular.module("moviedb").service("MovieService", ["$http", "$q", function($http, $q) {
+;angular.module("moviedb").service("MovieService", ["$http", "$q", "apiPaths", function($http, $q, apiPaths) {
 
-    this.getMovies = function() {
-
-
+    this.apiRequest = function(url) {
         // Crear el objeto diferido
         var deffered = $q.defer();
 
         // hacer asincrono el trabajo
-        $http.get('/api/movies/').then(
+        $http.get(url).then(
             //peticion ok
             function(response) {
                 //resolver la promesa
@@ -35443,12 +35457,53 @@ angular.module("moviedb", ['ngRoute']).config(
                 deffered.resolve(response.data);
             }
         );
+        //devolver la promesa
         return deffered.promise;
+    };
+
+
+    this.getMovies = function() {
+        return this.apiRequest(apiPaths.movies);
+    };
+
+    this.getMovie = function(movieId) {
+        var url = URL.resolve(apiPaths.movieDetail, { id: movieID });
+    };
+
+}]);
+;angular.module("URL", []).service("URL", ["$log", function($log) {
+    this.resolve = function(url, params) {
+        var finalURL = [];
+        var urlParts = url.split("/");
+        for (var i in urlParts) {
+            var urlPart = urlParts[i];
+            if (urlPart.substr(0, 1) == ":") {
+                //:id en id
+                var paramName = urlPart.substr(1);
+                var paramValue = params[paramName] || null;
+                if (paramValue == null) {
+                    $log.error("URL.resolve error", paramName, "not found in params dict. Check your 'params' values bro.");
+                    return;
+                }
+                finalURL.push(paramValue);
+              
+            } else {
+                finalURL.push(urlPart);
+            }
+        }
+        return finalURL.join("/");
 
     };
 }]);
+;angular.module("moviedb").value("apiPaths", {
+
+    movies: "api/movies/",
+    movieDetail: "api/movies/:id"
+    
+});
 ;angular.module("moviedb").constant("paths", {
     home: "/",
+    movieDetail: "/movies/:id",
     movies: "/movies/",
     series: "/series/",
     people: "/people/"
