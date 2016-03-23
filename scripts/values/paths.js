@@ -4,7 +4,9 @@
 */
 angular.module("moviedb").constant("paths", {
     home: "/",
+    movieDetail: "/movies/:id",
     movies: "/movies/",
     series: "/series/",
-    people: "/people/"
+    people: "/people/",
+    notFound: "/sorry"
 });
