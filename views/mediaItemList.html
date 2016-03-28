@@ -5,10 +5,13 @@
             <th>Title</th>
             <th>Year</th>
             <th>Rating</th>
+            <th>
+                <input type="search" ng-model="query.title" placeholder="Search..." class="from-control">
+            </th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="item in model">
+        <tr ng-repeat="item in model | filter:query">
             <td>
                 <img ng-src="{{::item.poster_url}}" alt="{{::item.title}}'s poster" title="{{::item.title}}">
             </td>
@@ -26,12 +29,7 @@
             </td>
             <td>
                 <a href="#{{::getDetailUrl({ stuff: item }) }}" class="btn btn-default">View</a>
-                
             </td>
         </tr>
     </tbody>
 </table>
-<!-- 
-    <a href="#{{::getMovieDetailURL(item) }}" class="btn btn-default">View</a> 
-    Asi no coge el getMovieDetailURL 
--->
