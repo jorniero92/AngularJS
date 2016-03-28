@@ -10,9 +10,11 @@
 
     <div ng-include="'views/ProgressBar.html'" ng-show="uiState=='loading'"></div>
     
-    <media-item-list items="model" get-detail-url="getMovieDetailURL" ng-show="uiState=='ideal'">
+    <media-item-list items="model" get-detail-url="getMovieDetailURL(stuff)" ng-show="uiState=='ideal'">
     </media-item-list>
+    
 </div>
+
 <!-- *getMovieDetailURL saldra como string, 
      *getMovieDetailURL(stuff) saldra como string
      *get-detail-url es un parametro q van a recibir y cuando llamao a ste metodo desde la directiva

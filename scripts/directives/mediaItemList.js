@@ -10,7 +10,7 @@ angular.module("moviedb").directive("mediaItemList", function(){
 			//asi lo hemos mapeado y cambiadod de nombre en el scope
 
 			//hay q hacer la llamada, poner los () a getDetailURL
-			getDetailUrl: "="
+			getDetailUrl: "&"
 		},
 		templateUrl: "views/mediaItemList.html"
 
