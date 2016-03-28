@@ -1,12 +1,12 @@
-angular.module("moviedb").controller("MovieDetailController", ["$scope", "$routeParams", "$location", "MovieService", "paths",
-        function($scope, $routeParams, $location, MovieService, paths) {
+angular.module("moviedb").controller("MovieDetailController", ["$scope", "$routeParams", "$location", "APIClient", "paths",
+        function($scope, $routeParams, $location, APIClient, paths) {
             //scope init
             $scope.model = {};
             $scope.uiState = 'loading';
 
             // COntroller init
             $scope.$emit("ChangeTitle", "Loading...");
-            MovieService.getMovie($routeParams.id).then(
+            APIClient.getMovie($routeParams.id).then(
                 //pelicula encontrada
                 function(movie) {
                     $scope.model = movie;
