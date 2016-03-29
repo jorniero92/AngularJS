@@ -6,6 +6,8 @@ angular.module("moviedb", ["ngRoute", "ngSanitize", "URL"]).config(
         //configuro las URLs de la aplicacion
         $routeProvider.when(paths.movies, {
             templateUrl: 'views/MoviesList.html'
+        }).when(paths.newMovie, {
+            templateUrl: 'views/NewMovie.html'
         }).when(paths.movieDetail, {
             controller: 'MovieDetailController',
             templateUrl: 'views/MediaItemDetail.html'
