@@ -26,10 +26,14 @@ angular.module("moviedb").controller("AppController", ["$scope", "$location", "p
         $scope.model.title = data;
     });
     */
+
     $scope.$on("$locationChangeSuccess", function(evt, currentRoute) {
         console.log("$locationChangeSuccess", $location.path());
         $scope.model.title = controller.titles[$location.path()] || "404 Not Found";
     });
 
+    $scope.$on("ChangeTitle", function(evt, title) {
+        $scope.model.title = title;
+    });
 
 }]);

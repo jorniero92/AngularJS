@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta character="UTF-8">
-    <title>Series</title>
-</head>
-
-<body>
+<div ng-controller="SeriesListController">
     <h1>Series</h1>
-</body>
-
-</html>
+    <button ng-click="model=[]">Delete All</button>
+    <div class="jumbotron" ng-show="uiState=='blank'">
+        <p class="lead">No data hear</p>
+    </div>
+    <div class="alert alert-danger" ng-show="uiState=='error'">
+        Error while loading data
+    </div>
+    <div ng-include="'views/ProgressBar.html'" ng-show="uiState=='loading'"></div>
+    <media-item-list items="model" get-detail-url="getSerieDetailURL(stuff)" ng-show="uiState=='ideal'">
+    </media-item-list>
+</div>

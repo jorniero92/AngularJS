@@ -1,18 +1,17 @@
-angular.module("moviedb").controller("MoviesListController", ["$scope", "$log", "APIClient", "URL", "paths",
+angular.module("moviedb").controller("SeriesListController", ["$scope", "$log", "APIClient", "URL", "paths",
     function($scope, $log, APIClient, URL, paths) {
-
-        //  $scope.uiState = 'blank';
+        
         /* Scope model init */
         $scope.model = [];
 
         $scope.uiState = 'loading';
-        
-        $scope.getMovieDetailURL = function(movie){
-            return URL.resolve(paths.movieDetail, {id: movie.id});
+
+        $scope.getSerieDetailURL = function(serie) {
+            return URL.resolve(paths.serieDetail, { id: serie.id });
         };
 
         /* controller start*/
-        APIClient.getMovies().then(
+        APIClient.getSeries().then(
             // promesa resuelta
             function(data) {
                 $log.log("SUCCESS", data);
