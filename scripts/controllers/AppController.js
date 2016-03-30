@@ -1,4 +1,5 @@
-angular.module("moviedb").controller("AppController", ["$scope", "$location", "paths", function($scope, $location, paths) {
+angular.module("moviedb").controller("AppController", 
+    ["$scope", "$location", "paths", function($scope, $location, paths) {
     var controller = this;
 
 
@@ -14,18 +15,6 @@ angular.module("moviedb").controller("AppController", ["$scope", "$location", "p
         //mirar la referencia de la pestaña en la q estoy
         title: ""
     }
-
-    /* Scope Methods */
-    /*
-    //$on son eventos del scope de angular para capturar lo q nosotros digamos
-    //en este caso capturamos "OnMenuChange" 
-    
-    $scope.$on("OnMenuChange", function(evt, data) {
-        //console.log("OnMenuChange", arguments);
-        //$scope.model.title = arguments[1];
-        $scope.model.title = data;
-    });
-    */
 
     $scope.$on("$locationChangeSuccess", function(evt, currentRoute) {
         console.log("$locationChangeSuccess", $location.path());
